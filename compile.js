@@ -18,7 +18,12 @@ class Compile{
     
     // 专门一写一些辅助的方法
     isElementNode(node){
-       return node.NodeType===1;
+       if(eval(node.nodeType)==Node.ELEMENT_NODE){
+            return true;
+        }else{
+            return false;
+        }
+       
     }
 
     // 核心的方法
@@ -29,11 +34,13 @@ class Compile{
            if(this.isElementNode(node)){
                // 是元素节点,还需要继续深入的检查
                // 这里需要编译元素
+               console.log('元素节点');
                this.compileElement(node);
                this.compile(node);
 
              
            }else{
+               console.log('文本节点')
                // 文本节点
                this.compileText(node);
                
@@ -54,7 +61,6 @@ class Compile{
     }
     node2fragment(el){  // 需要将el中的内容全部放到内存中
         // 文档碎片 内存中的dom节点
-        console.log('el',el);
       
         let fragment=document.createDocumentFragment();
         let firstChild;
